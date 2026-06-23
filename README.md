@@ -1,7 +1,9 @@
 ![Lokál Banner](./banner.png)
 
+
 # **Team Lokál**
 Takım 24
+
 # Ürün İle İlgili Bilgiler
 
 ## Takım Elemanları
@@ -16,15 +18,23 @@ Takım 24
       </a>
       <br />
       Scrum Master
+      <br />
+      <a href="https://linkedin.com/in/elifozlembagci">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white"/>
+      </a>
     </td>
     <td align="center">
-      <a href="https://github.com/[aybuke-github]">
-        <img src="https://github.com/[aybuke-github].png" width="100px;" alt="Aybüke"/>
+      <a href="https://github.com/aybukekrcvs">
+        <img src="https://github.com/aybukekrcvs.png" width="100px;" alt="Aybüke"/>
         <br />
         <b>Aybüke Karaçavuş</b>
       </a>
       <br />
       Product Owner
+      <br />
+      <a href="https://linkedin.com/in/aybukekrcvs">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white"/>
+      </a>
     </td>
     <td align="center">
       <a href="https://github.com/alperenynk">
@@ -34,6 +44,10 @@ Takım 24
       </a>
       <br />
       Developer
+      <br />
+      <a href="https://linkedin.com/in/alperenyanık">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white"/>
+      </a>
     </td>
     <td align="center">
       <a href="https://github.com/[emre-github]">
@@ -43,15 +57,23 @@ Takım 24
       </a>
       <br />
       Developer
+      <br />
+      <a href="https://linkedin.com/in/emreekaratas">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white"/>
+      </a>
     </td>
     <td align="center">
-      <a href="https://github.com/[duru-github]">
-        <img src="https://github.com/[duru-github].png" width="100px;" alt="Duru"/>
+      <a href="https://github.com/durukahraman">
+        <img src="https://github.com/durukahraman.png" width="100px;" alt="Duru"/>
         <br />
         <b>Duru Kahraman</b>
       </a>
       <br />
       Developer
+      <br />
+      <a href="https://linkedin.com/in/duru-kahraman-702733228">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white"/>
+      </a>
     </td>
   </tr>
 </table>
