@@ -1,4 +1,5 @@
-![Lokál Banner](./banner.png)
+![Lokál Banner](./banner.png)
+
 # **Team Lokál**
 Takım 24
 # Ürün İle İlgili Bilgiler
