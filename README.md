@@ -106,3 +106,33 @@ Takım 24
 
 
 
+
+Backlog'umuz ilk yapılacak story'lere göre düzenlenmiştir. Sprint başına tahmin edilen puan sayısını geçmeyecek şekilde seçimler yapılmaktadır.
+
+- **Daily Scrum:** Daily Scrum toplantıları Slack üzerinden yapılmıştır. [Sprint 1 Daily Scrum Notları](./ProjectManagement/Sprint1Documents/SprintReview.md)
+
+- **Sprint board update:** Sprint board ekran görüntüleri:
+
+![Backlog 1](./ProjectManagement/Sprint1Documents/backlog1.png)
+![Backlog 2](./ProjectManagement/Sprint1Documents/backlog2.png)
+![Backlog 3](./ProjectManagement/Sprint1Documents/backlog3.png)
+
+- **Ürün Durumu:** Ekran görüntüleri:
+
+![Ürün 1](./ProjectManagement/Sprint1Documents/productss1.png)
+![Ürün 2](./ProjectManagement/Sprint1Documents/productss2.png)
+![Ürün 3](./ProjectManagement/Sprint1Documents/productss3.png)
+![Ürün 4](./ProjectManagement/Sprint1Documents/productss4.png)
+![Ürün 5](./ProjectManagement/Sprint1Documents/productss5.png)
+
+- **Sprint Review:** Alınan kararlar: Sprint sonunda ürünün MVP'si tamamlanmıştır: sohbet tabanlı öneri arayüzü, tarih hassasiyetli etkinlik önerisi, üyelik sistemi (giriş/kayıt, şifre sıfırlama), topluluk akışı, kullanıcı profili, harita görünümü ve haftalık e-posta altyapısı geliştirilmiştir. Gerçek servis anahtarlarının temin edilmesi tamamlanamadığı için gerçek veriyle canlı test bir sonraki sprint'e aktarılmıştır. Sprint Review katılımcıları: Duru Kahraman, Elif Özlem Bağcı, Emre Karataş, Aybüke Karaçavuş, Alperen Yanık
+
+- **Sprint Retrospective:**
+   - Takım içindeki görev dağılımıyla ilgili düzenleme yapılması kararı alınmıştır; özellikle API anahtarlarının temini için sorumlu kişi netleştirilmelidir.
+   - Tahmin puanları gözden geçirilmeli ve sprint planlama toplantılarında gerekli geri bildirimlerin developer'lar tarafından verildiğine emin olunmalıdır.
+   - Unit test'ler için ayrılan efor/saat arttırılmalıdır.
+   - Mock veriden gerçek servislere geçiş bir sonraki sprint'in başında ele alınmalıdır.
+
+# Sprint 2
+
+# Sprint 3
