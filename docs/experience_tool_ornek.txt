@@ -1,0 +1,5 @@
+Tool: experience | Başarılı: True
+
+  [deneyim_paketi] PLAN_1: Akşam Yürüyüşü ve Yemek
+  Bu plan, Kadıköy'de düşük-orta enerji seviyesine uygun, akşam alışverişi ve sinema keyfi sunar.
+
