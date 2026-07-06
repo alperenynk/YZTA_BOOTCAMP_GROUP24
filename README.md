@@ -136,3 +136,9 @@ Backlog'umuz ilk yapılacak story'lere göre düzenlenmiştir. Sprint başına t
 # Sprint 2
 
 # Sprint 3
+
+## Daily Scrum Ekran Görüntüleri
+
+![Daily Scrum 1](./ProjectManagement/Sprint1Documents/DailyScrum1.png)
+![Daily Scrum 2](./ProjectManagement/Sprint1Documents/DailyScrum2.png)
+![Daily Scrum 3](./ProjectManagement/Sprint1Documents/DailyScrum3.png)
