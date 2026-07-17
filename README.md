@@ -190,7 +190,7 @@ Backlog'umuz ilk yapılacak story'lere göre düzenlenmiştir. Sprint başına t
 - Daily Scrum toplantıları Slack üzerinden yapılmıştır. İletişim Slack üzerinden yürütülmüştür. İletişim kopuklukları çoğunlukla çözülmüştür.
 <img width="1918" height="1020" alt="image" src="https://github.com/user-attachments/assets/9d789e03-79c1-4394-80bc-b838a8ef5e75" />
 <img width="1512" height="982" alt="Ekran Resmi 2026-07-18 00 06 16" src="https://github.com/user-attachments/assets/87036e69-cb7b-4b68-b483-ff77cd672c4f" />
-<img width="1512" height="982" alt="Ekran Resmi 2026-07-18 00 05 50" src="https://github.com/user-attachments/assets/3e636bb2-439e-4b3c-b87f-90da9891f830" />
+<img width="1512" height="982" alt="Ekran Resmi 2026-07-17 15 24 23" src="https://github.com/user-attachments/assets/3b2942f5-17b1-4b10-a253-f39cd11e364c" />
 
 
 
@@ -213,6 +213,7 @@ Backlog'umuz ilk yapılacak story'lere göre düzenlenmiştir. Sprint başına t
 <img width="1512" height="982" alt="Ekran Resmi 2026-07-18 02 41 16" src="https://github.com/user-attachments/assets/a31b55af-89e1-48b6-ab39-cd90c6f18481" />
 <img width="926" height="287" alt="Ekran Resmi 2026-07-18 02 41 30" src="https://github.com/user-attachments/assets/59d38cdb-7af6-4c55-92d6-3ec72c02d498" />
 <img width="1512" height="982" alt="Ekran Resmi 2026-07-18 02 41 40" src="https://github.com/user-attachments/assets/cd371f6e-cfeb-42b1-9f54-9c6523ce38b7" />
+<img width="926" height="287" alt="Ekran Resmi 2026-07-18 02 41 30" src="https://github.com/user-attachments/assets/f18e8dd1-b465-4567-af8f-8884fc89b0c9" />
 
 
 
