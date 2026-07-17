@@ -1,0 +1,14 @@
+{
+  "name": "Lokál — Şehri hisset, anı yaşa",
+  "short_name": "Lokál",
+  "description": "Ruh haline, konumuna ve bütçene göre 4 katmanlı deneyim önerisi.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7faf5",
+  "theme_color": "#4a5d43",
+  "lang": "tr",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
