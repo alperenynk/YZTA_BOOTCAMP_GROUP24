@@ -101,7 +101,7 @@ export default function NotificationBell() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-10 z-50 w-80 overflow-hidden rounded-2xl border border-dusk-700 bg-dusk-900 shadow-xl">
+        <div className="app-panel absolute right-0 top-10 z-50 w-80 overflow-hidden shadow-xl">
           <p className="border-b border-dusk-700/60 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-dusk-300">
             Bildirimler
           </p>

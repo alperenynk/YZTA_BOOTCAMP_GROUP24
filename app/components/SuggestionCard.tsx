@@ -30,6 +30,25 @@ export default function SuggestionCard({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [shareLabel, setShareLabel] = useState("🔗 paylaş");
+  const [saved, setSaved] = useState(false);
+  const [savingBookmark, setSavingBookmark] = useState(false);
+
+  async function toggleSave() {
+    if (!item.id || savingBookmark) return;
+    setSavingBookmark(true);
+    try {
+      const res = await fetch(`/api/suggestions/${item.id}/save`, {
+        method: "POST",
+      });
+      if (!res.ok) throw new Error();
+      const d = await res.json();
+      setSaved(d.saved);
+    } catch {
+      // sessizce başarısız ol, kullanıcı tekrar deneyebilir
+    } finally {
+      setSavingBookmark(false);
+    }
+  }
 
   async function sharePost() {
     if (!item.id) return;
@@ -84,12 +103,29 @@ export default function SuggestionCard({
           <p className="mt-1 font-mono text-xs text-teal-glow">{item.meta}</p>
         </div>
         {stage === "idle" && (
-          <button
-            onClick={() => setStage("rating")}
-            className="btn-primary shrink-0 px-4 py-1.5 text-xs"
-          >
-            Gittim ✓
-          </button>
+          <div className="flex shrink-0 items-center gap-2">
+            {item.id && (
+              <button
+                onClick={toggleSave}
+                disabled={savingBookmark}
+                title={saved ? "Kayıtlardan çıkar" : "Sonra bakmak için kaydet"}
+                aria-label={saved ? "Kayıtlardan çıkar" : "Kaydet"}
+                className={`rounded-full border px-3 py-1.5 text-xs transition-colors disabled:opacity-50 ${
+                  saved
+                    ? "border-amber-glow bg-amber-glow/10 text-amber-glow"
+                    : "border-dusk-600 text-dusk-200 hover:border-amber-glow"
+                }`}
+              >
+                {saved ? "🔖 kaydedildi" : "🔖 kaydet"}
+              </button>
+            )}
+            <button
+              onClick={() => setStage("rating")}
+              className="btn-primary px-4 py-1.5 text-xs"
+            >
+              Gittim ✓
+            </button>
+          </div>
         )}
         {stage === "done" && (
           <span className="shrink-0 font-mono text-xs text-teal-glow">

@@ -2,13 +2,15 @@ import type { ParsedQuery, SuggestionItem } from "@/lib/types";
 
 type EventResult = Omit<SuggestionItem, "layer" | "reason_text">;
 
-// Alan kısıtlı arama: alakasız blog/haber sonuçlarını en baştan ele
+// Alan kısıtlı arama: SADECE bu bilet siteleri taranır, genel web taraması yapılmaz
 const TICKET_DOMAINS = [
-  "biletix.com",
   "bubilet.com.tr",
   "passo.com.tr",
+  "radarturkiye.com",
   "biletinial.com",
-  "mobilet.com",
+  "biletix.com",
+  "kultur.istanbul",
+  "iticket.com.tr",
 ];
 
 const FREE_EVENT_DOMAINS = [

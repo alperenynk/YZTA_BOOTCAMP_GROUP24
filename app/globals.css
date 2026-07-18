@@ -1,0 +1,444 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-manrope);
+
+  --color-dusk-950: var(--dusk-950);
+  --color-dusk-900: var(--dusk-900);
+  --color-dusk-800: var(--dusk-800);
+  --color-dusk-700: var(--dusk-700);
+  --color-dusk-600: var(--dusk-600);
+  --color-dusk-300: var(--dusk-300);
+  --color-dusk-200: var(--dusk-200);
+  --color-dusk-100: var(--dusk-100);
+  --color-amber-glow: var(--amber-glow);
+  --color-amber-soft: var(--amber-soft);
+  --color-teal-glow: var(--teal-glow);
+  --color-lavender: var(--lavender);
+  --color-brand: var(--brand);
+}
+
+/* ---- gündüz: landing'in krem ailesi ---- */
+:root {
+  --dusk-950: #f5f0e6;
+  --dusk-900: #faf7f0;
+  --dusk-800: #ece6d8;
+  --dusk-700: #d9d0be;
+  --dusk-600: #b8aa92;
+  --dusk-300: #7a7264;
+  --dusk-200: #4a4438;
+  --dusk-100: #14110c;
+
+  --brand: #4a5d43;
+  --amber-glow: #4a5d43;
+  --amber-soft: #6b7f5f;
+  --teal-glow: #5c7a4e;
+  --lavender: #8f9779;
+
+  --glow-1: rgba(74, 93, 67, 0.08);
+  --glow-2: rgba(143, 151, 121, 0.06);
+
+  --pastel-yellow: #f0e8cc;
+  --pastel-lime: #e3ecd8;
+  --pastel-pink: #eaf0e6;
+  --pastel-lavender: #e8ede0;
+  --pastel-teal: #ddeee4;
+
+  --primary-bg: #4a5d43;
+  --primary-fg: #faf7f0;
+
+  --app-line: rgba(20, 17, 12, 0.12);
+  --app-panel-bg: rgba(250, 247, 240, 0.82);
+  --app-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- gece: landing ile birebir ---- */
+html.dark {
+  --dusk-950: #14110c;
+  --dusk-900: #1d1912;
+  --dusk-800: #252018;
+  --dusk-700: rgba(239, 231, 214, 0.16);
+  --dusk-600: rgba(239, 231, 214, 0.28);
+  --dusk-300: rgba(239, 231, 214, 0.55);
+  --dusk-200: rgba(239, 231, 214, 0.72);
+  --dusk-100: #efe7d6;
+
+  --brand: #8fbf7f;
+  --amber-glow: #8fbf7f;
+  --amber-soft: #b4d8a6;
+  --teal-glow: #8f9779;
+  --lavender: #b4d8a6;
+
+  --glow-1: rgba(143, 191, 127, 0.1);
+  --glow-2: rgba(143, 151, 121, 0.06);
+
+  --pastel-yellow: rgba(180, 216, 166, 0.12);
+  --pastel-lime: rgba(143, 191, 127, 0.1);
+  --pastel-pink: rgba(143, 151, 121, 0.1);
+  --pastel-lavender: rgba(180, 216, 166, 0.08);
+  --pastel-teal: rgba(143, 191, 127, 0.08);
+
+  --primary-bg: #8fbf7f;
+  --primary-fg: #14110c;
+
+  --app-line: rgba(239, 231, 214, 0.16);
+  --app-panel-bg: rgba(29, 25, 18, 0.55);
+}
+
+body {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, var(--glow-1), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 20%, var(--glow-2), transparent),
+    var(--dusk-950);
+  color: var(--dusk-100);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  transition: background-color 0.35s var(--app-ease), color 0.35s var(--app-ease);
+}
+
+body ::selection {
+  background: var(--amber-glow);
+  color: var(--dusk-950);
+}
+
+/* landing ile aynı grain dokusu — uygulama kabuğunda */
+.app-grain {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  mix-blend-mode: soft-light;
+  animation: app-grain 7s steps(8) infinite;
+}
+
+@keyframes app-grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  12% {
+    transform: translate(-2%, 1%);
+  }
+  25% {
+    transform: translate(1%, -2%);
+  }
+  37% {
+    transform: translate(-1%, 2%);
+  }
+  50% {
+    transform: translate(2%, 1%);
+  }
+  62% {
+    transform: translate(-2%, -1%);
+  }
+  75% {
+    transform: translate(1%, 2%);
+  }
+  87% {
+    transform: translate(2%, -2%);
+  }
+}
+
+/* landing nav ile uyumlu üst bar */
+.app-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--app-line);
+  background: color-mix(in srgb, var(--dusk-950) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+}
+
+.app-nav-logo {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
+  color: var(--dusk-100);
+}
+
+.app-nav-link {
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--dusk-200);
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  transition: color 0.3s var(--app-ease), background 0.3s var(--app-ease);
+}
+
+.app-nav-link:hover {
+  color: var(--dusk-100);
+  background: color-mix(in srgb, var(--dusk-800) 65%, transparent);
+}
+
+.app-nav-link.is-active {
+  color: var(--amber-glow);
+}
+
+.app-nav-outline {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: 1px solid color-mix(in srgb, var(--dusk-100) 35%, transparent);
+  border-radius: 999px;
+  padding: 0.65rem 1.2rem;
+  color: var(--dusk-100);
+  transition: background 0.35s var(--app-ease), color 0.35s var(--app-ease);
+}
+
+.app-nav-outline:hover {
+  background: var(--dusk-100);
+  color: var(--dusk-950);
+}
+
+/* bölüm başlıkları — landing eyebrow */
+.app-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--amber-soft);
+}
+
+.app-eyebrow::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: var(--amber-soft);
+}
+
+/* cam panel — kartlar ve formlar */
+.app-panel {
+  border: 1px solid var(--app-line);
+  border-radius: 1.25rem;
+  background: var(--app-panel-bg);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow:
+    0 24px 60px -28px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 color-mix(in srgb, var(--dusk-100) 10%, transparent);
+}
+
+/* birincil pill buton — landing lp-btn-solid */
+.btn-primary {
+  background: var(--primary-bg);
+  color: var(--primary-fg);
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  transition: opacity 0.2s var(--app-ease), transform 0.1s var(--app-ease);
+}
+
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.35;
+}
+
+/* katman kartları */
+.card-ticketed {
+  background: var(--pastel-yellow);
+}
+
+.card-free {
+  background: var(--pastel-lime);
+}
+
+.card-venue {
+  background: var(--pastel-pink);
+}
+
+.card-experience {
+  background: var(--pastel-lavender);
+}
+
+.card-neutral {
+  background: var(--dusk-900);
+}
+
+/* tam-bleed giriş kahramanı — landing hero'suyla aynı dil */
+.app-hero {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: -2.5rem;
+  padding: 5.5rem 6vw 4rem;
+  overflow: hidden;
+  background:
+    radial-gradient(60vw 40vh at 82% 0%, var(--glow-1), transparent 65%),
+    radial-gradient(50vw 35vh at 8% 100%, var(--glow-2), transparent 65%),
+    var(--dusk-950);
+}
+
+.app-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* keşif formu — landing'deki .glass kartıyla aynı hava */
+.app-glass {
+  position: relative;
+  z-index: 2;
+  margin-top: -3.5rem;
+  border: 1px solid var(--app-line);
+  border-radius: 1.6rem;
+  background: var(--app-panel-bg);
+  backdrop-filter: blur(22px) saturate(1.2);
+  -webkit-backdrop-filter: blur(22px) saturate(1.2);
+  box-shadow:
+    0 30px 80px -30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 color-mix(in srgb, var(--dusk-100) 8%, transparent);
+}
+
+.app-glass-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--amber-soft);
+}
+
+.app-glass-tag i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber-glow);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.7);
+  }
+}
+
+/* auth sol panel — landing koyu cam */
+.brand-panel {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(143, 191, 127, 0.12), transparent 42%),
+    radial-gradient(circle at 15% 85%, rgba(180, 216, 166, 0.08), transparent 38%),
+    linear-gradient(150deg, rgba(29, 25, 18, 0.92), rgba(20, 17, 12, 0.98));
+  color: #efe7d6;
+  border-right: 1px solid rgba(239, 231, 214, 0.12);
+}
+
+.route-line {
+  border-left: 2px dotted var(--amber-glow);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.card-enter {
+  animation: rise 0.35s ease both;
+}
+
+.toast-enter {
+  animation: rise 0.25s ease both;
+}
+
+/* sayfa geçişi — özellikle landing'den gelirken karartmanın devamı gibi hissettirir */
+.app-page-enter {
+  animation: app-page-in 0.5s var(--app-ease) both;
+}
+
+@keyframes app-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heart-pop {
+  display: inline-block;
+  animation: pop 0.3s ease;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--dusk-800) 25%,
+    var(--dusk-700) 50%,
+    var(--dusk-800) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-grain,
+  .card-enter,
+  .toast-enter,
+  .heart-pop,
+  .skeleton,
+  .app-page-enter {
+    animation: none;
+  }
+}

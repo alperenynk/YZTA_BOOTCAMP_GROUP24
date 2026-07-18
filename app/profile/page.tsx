@@ -93,15 +93,27 @@ const LAYER_ICON: Record<string, string> = {
   experience: "🧭",
 };
 
-type Tab = "visits" | "posts" | "searches" | "friends" | "settings";
+type Tab = "visits" | "saved" | "posts" | "searches" | "friends" | "settings";
 
 const TABS: { key: Tab; label: string }[] = [
   { key: "visits", label: "🧭 Gittiklerim" },
+  { key: "saved", label: "🔖 Kaydettiklerim" },
   { key: "posts", label: "📝 Paylaşımlarım" },
   { key: "searches", label: "🔍 Aramalarım" },
   { key: "friends", label: "👋 Arkadaşlar" },
   { key: "settings", label: "⚙️ Ayarlar" },
 ];
+
+interface SavedRow {
+  saved_id: number;
+  created_at: string;
+  suggestion_id: number;
+  title: string;
+  meta: string | null;
+  layer: string;
+  reason_text: string | null;
+  source_url: string | null;
+}
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -109,6 +121,9 @@ export default function ProfilePage() {
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("visits");
   const avatarInputRef = useRef<HTMLInputElement>(null);
+
+  // kaydettiklerim sekmesi
+  const [saved, setSaved] = useState<SavedRow[] | null>(null);
 
   // arkadaşlar sekmesi
   const [friendData, setFriendData] = useState<FriendData | null>(null);
@@ -159,6 +174,25 @@ export default function ProfilePage() {
   useEffect(() => {
     load();
   }, [load]);
+
+  useEffect(() => {
+    if (tab === "saved" && saved === null) {
+      fetch("/api/saved")
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => setSaved(d?.items ?? []))
+        .catch(() => setSaved([]));
+    }
+  }, [tab, saved]);
+
+  async function unsave(suggestionId: number) {
+    const res = await fetch(`/api/suggestions/${suggestionId}/save`, {
+      method: "POST",
+    });
+    if (res.ok) {
+      setSaved((prev) => prev?.filter((s) => s.suggestion_id !== suggestionId) ?? null);
+      toast("Kayıtlardan çıkarıldı.", "info");
+    }
+  }
 
   const loadFriends = useCallback(() => {
     fetch("/api/friends")
@@ -413,6 +447,57 @@ export default function ProfilePage() {
                 <p className="mt-1 font-mono text-[10px] text-dusk-300">
                   {v.created_at}
                 </p>
+              </li>
+            ))}
+          </ul>
+        ))}
+
+      {/* ---- Kaydettiklerim ---- */}
+      {tab === "saved" &&
+        (saved === null ? (
+          <p className="font-mono text-sm text-dusk-300">yükleniyor…</p>
+        ) : saved.length === 0 ? (
+          <Empty text="Henüz kaydettiğin bir öneri yok — kartlardaki 🔖 kaydet butonuyla sonra bakmak üzere biriktirebilirsin." />
+        ) : (
+          <ul className="space-y-3">
+            {saved.map((s) => (
+              <li
+                key={s.saved_id}
+                className="rounded-2xl border border-dusk-700/60 bg-dusk-900 p-4"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-medium text-dusk-100">
+                    {LAYER_ICON[s.layer]} {s.title}
+                  </span>
+                  <button
+                    onClick={() => unsave(s.suggestion_id)}
+                    title="Kayıtlardan çıkar"
+                    className="font-mono text-xs text-dusk-300 hover:text-red-400"
+                  >
+                    kaldır ✕
+                  </button>
+                </div>
+                {s.meta && (
+                  <p className="mt-1 font-mono text-xs text-teal-glow">{s.meta}</p>
+                )}
+                {s.reason_text && (
+                  <p className="mt-2 text-sm italic text-dusk-200">{s.reason_text}</p>
+                )}
+                <div className="mt-2 flex items-center gap-3">
+                  {s.source_url && (
+                    <a
+                      href={s.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[10px] text-teal-glow underline-offset-4 hover:underline"
+                    >
+                      kaynağa git ↗
+                    </a>
+                  )}
+                  <p className="font-mono text-[10px] text-dusk-300">
+                    kaydedilme: {s.created_at}
+                  </p>
+                </div>
               </li>
             ))}
           </ul>

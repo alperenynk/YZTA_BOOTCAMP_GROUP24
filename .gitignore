@@ -1,4 +1,25 @@
-.env
+# env dosyaları (gerçek key'ler asla commit edilmesin)
+.env*
+!.env.example
+
+# Python araçları (events_tool.py, experience_tool.py)
 __pycache__/
-*.db
 .venv/
+
+# SQLite verisi
+*.db
+*.db-shm
+*.db-wal
+/data
+
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
