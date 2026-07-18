@@ -15,16 +15,14 @@ export default function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block font-mono text-xs uppercase tracking-wider text-dusk-300">
-        {label}
-      </span>
+      <span className="app-eyebrow mb-2">{label}</span>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         autoComplete={autoComplete}
         required
-        className="w-full rounded-xl border border-dusk-700 bg-dusk-900 p-3 text-dusk-100 focus:border-amber-glow focus:outline-none"
+        className="w-full rounded-2xl border border-dusk-700 bg-dusk-900/80 p-3.5 text-dusk-100 placeholder:text-dusk-300 focus:border-amber-glow focus:outline-none"
       />
     </label>
   );

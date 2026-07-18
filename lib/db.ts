@@ -125,6 +125,15 @@ export function getDb(): Database.Database {
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
 
+    -- Kaydedilen öneriler: "Gittim"den ayrı, "sonra bakarım" için bookmark
+    CREATE TABLE IF NOT EXISTS saved_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL REFERENCES users(id),
+      suggestion_id INTEGER NOT NULL REFERENCES suggestions(id),
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      UNIQUE (user_id, suggestion_id)
+    );
+
     -- Web push abonelikleri
     CREATE TABLE IF NOT EXISTS push_subscriptions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,

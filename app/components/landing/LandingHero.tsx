@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { createGlobeScene, type GlobeSceneHandle } from "./globe-scene";
@@ -8,6 +9,7 @@ import { LANDING_LOCATIONS } from "./locations";
 import "./landing.css";
 
 export default function LandingHero() {
+  const router = useRouter();
   const rootRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const glRef = useRef<HTMLDivElement>(null);
@@ -15,6 +17,7 @@ export default function LandingHero() {
   const loaderRef = useRef<HTMLDivElement>(null);
   const loaderCountRef = useRef<HTMLDivElement>(null);
   const loaderBarRef = useRef<HTMLElement>(null);
+  const exitRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const heroInnerRef = useRef<HTMLDivElement>(null);
   const heroStatRef = useRef<HTMLDivElement>(null);
@@ -91,6 +94,28 @@ export default function LandingHero() {
       })
       .add(() => setPanelOpen(false));
   }, []);
+
+  // sayfa geçişi: kesfet'e atlamadan önce landing'i yumuşakça karart
+  const goTo = useCallback(
+    (href: string) => {
+      const overlay = exitRef.current;
+      if (reduced || !overlay) {
+        router.push(href);
+        return;
+      }
+      gsap.set(overlay, { display: "flex", pointerEvents: "auto" });
+      gsap.to(overlay, { opacity: 1, duration: 0.5, ease: "power2.inOut" });
+      gsap.fromTo(
+        overlay.querySelector(".lp-exit-mark"),
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", delay: 0.1 }
+      );
+      // GSAP'ın rAF ticker'ı sekme arka plana alınca yavaşlayabilir —
+      // gerçek yönlendirmeyi animasyondan bağımsız bir zamanlayıcıya bağla
+      window.setTimeout(() => router.push(href), 550);
+    },
+    [reduced, router]
+  );
 
   const handleFocus = useCallback(
     (index: number, viaSwitch: boolean) => {
@@ -278,14 +303,17 @@ export default function LandingHero() {
         </div>
       </div>
 
+      <div ref={exitRef} className="lp-exit" aria-hidden="true">
+        <span className="lp-exit-mark">
+          Lok<span className="lp-accent">á</span>l
+        </span>
+      </div>
+
       <div className="lp-grain" aria-hidden="true" />
 
       <header className="lp-nav">
         <Link href="/" className="lp-nav-logo">
           Lokál<sup style={{ fontSize: "0.5em" }}>®</sup>
-        </Link>
-        <Link href="/kesfet" className="lp-nav-cta">
-          Keşfet
         </Link>
       </header>
 
@@ -333,7 +361,14 @@ export default function LandingHero() {
                 seferinde başka bir hikâye.
               </p>
               <div className="lp-hero-ctas" id="lpHeroCtas">
-                <Link href="/kesfet" className="lp-btn lp-btn-solid">
+                <Link
+                  href="/kesfet"
+                  className="lp-btn lp-btn-solid"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goTo("/kesfet");
+                  }}
+                >
                   Rotamı Oluştur <span className="lp-arr">→</span>
                 </Link>
               </div>
@@ -375,7 +410,14 @@ export default function LandingHero() {
               <p className="lp-loc-desc">{activeLocation.desc}</p>
             </div>
             <div className="lp-loc-foot">
-              <Link href="/kesfet" className="lp-loc-cta">
+              <Link
+                href="/kesfet"
+                className="lp-loc-cta"
+                onClick={(e) => {
+                  e.preventDefault();
+                  goTo("/kesfet");
+                }}
+              >
                 Bu şehir için rota oluştur <span className="lp-arr">→</span>
               </Link>
               <div className="lp-loc-nav">

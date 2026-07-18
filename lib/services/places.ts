@@ -1,4 +1,5 @@
 import type { ParsedQuery, SuggestionItem, WeatherInfo } from "@/lib/types";
+import { isLlmMock, suggestVenues } from "@/lib/llm";
 
 function hasKey(): boolean {
   const key = process.env.GOOGLE_PLACES_API_KEY;
@@ -72,20 +73,31 @@ function isOpenAir(meta: string): boolean {
   return meta.includes("açık hava");
 }
 
+function mockVenuesFor(location: string | null): Omit<SuggestionItem, "layer" | "reason_text">[] {
+  const key = (location || "").toLocaleLowerCase("tr");
+  // "başka öner" akışında çeşitlilik için karıştır
+  return [...(MOCK_VENUES[key] ?? MOCK_VENUES.default)].sort(
+    () => Math.random() - 0.5
+  );
+}
+
 export async function getVenues(
   parsed: ParsedQuery,
   weather: WeatherInfo
 ): Promise<Omit<SuggestionItem, "layer" | "reason_text">[]> {
   let venues: Omit<SuggestionItem, "layer" | "reason_text">[];
 
-  if (!hasKey()) {
-    const key = (parsed.location || "").toLocaleLowerCase("tr");
-    // "başka öner" akışında çeşitlilik için karıştır
-    venues = [...(MOCK_VENUES[key] ?? MOCK_VENUES.default)].sort(
-      () => Math.random() - 0.5
-    );
-  } else {
+  if (hasKey()) {
     venues = await fetchGooglePlaces(parsed);
+  } else if (!isLlmMock()) {
+    // Places key yok ama gerçek LLM var — genel kategori yerine LLM'in
+    // bildiği gerçek, isimlendirilmiş yerleri kullan
+    const llmVenues = await suggestVenues(parsed, weather);
+    venues = llmVenues.length
+      ? llmVenues.map((v) => ({ title: v.title, meta: v.meta, source_url: null }))
+      : mockVenuesFor(parsed.location);
+  } else {
+    venues = mockVenuesFor(parsed.location);
   }
 
   // Yağmur varsa açık hava mekanlarını filtrele (hepsi açık havaysa dokunma)
@@ -137,7 +149,6 @@ async function fetchGooglePlaces(
       source_url: p.googleMapsUri ?? null,
     }));
   } catch {
-    const key = (parsed.location || "").toLocaleLowerCase("tr");
-    return MOCK_VENUES[key] ?? MOCK_VENUES.default;
+    return mockVenuesFor(parsed.location);
   }
 }

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#4a5d43",
+  themeColor: "#14110c",
 };
 
 export default function RootLayout({
@@ -45,10 +45,10 @@ export default function RootLayout({
       className={`${fraunces.variable} ${manrope.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* Tema tercihini ilk boyamadan önce uygula — varsayılan: krem (gündüz) */}
+        {/* Tema tercihini ilk boyamadan önce uygula — varsayılan: landing ile aynı koyu */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem("lokal-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){};
+            __html: `try{var t=localStorage.getItem("lokal-theme");document.documentElement.classList.toggle("dark",t!=="light")}catch(e){document.documentElement.classList.add("dark")};
 if("serviceWorker" in navigator){navigator.serviceWorker.register("/sw.js").catch(function(){})}`,
           }}
         />

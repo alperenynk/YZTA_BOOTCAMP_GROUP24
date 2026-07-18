@@ -54,8 +54,7 @@ export default function RouteMap({
       for (let i = 0; i < steps.length; i++) {
         const step = steps[i];
         const query =
-          step.place_query ||
-          (location ? `${step.title}, ${location}, İstanbul` : null);
+          step.place_query || (location ? `${step.title}, ${location}` : null);
         if (!query) continue;
         const coords = await geocode(query);
         if (cancelled) return;

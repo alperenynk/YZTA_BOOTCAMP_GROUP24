@@ -11,7 +11,6 @@ export default function AuthNav() {
   const { data: session, isPending } = authClient.useSession();
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
-  // profil fotoğrafını hafif uçtan çek
   useEffect(() => {
     if (!session) {
       setAvatarUrl(null);
@@ -27,10 +26,7 @@ export default function AuthNav() {
 
   if (!session) {
     return (
-      <Link
-        href="/login"
-        className="rounded-full border border-amber-glow/50 px-3 py-1 text-amber-glow transition-colors hover:bg-amber-glow/10"
-      >
+      <Link href="/login" className="app-nav-outline">
         Giriş yap
       </Link>
     );
@@ -41,10 +37,12 @@ export default function AuthNav() {
       <Link
         href="/profile"
         title="Profilim"
-        className="flex items-center gap-2 rounded-full py-0.5 pl-0.5 pr-2 transition-colors hover:bg-dusk-800"
+        className="flex items-center gap-2 rounded-full py-0.5 pl-0.5 pr-2 transition-colors hover:bg-dusk-800/70"
       >
         <Avatar name={session.user.name} imageUrl={avatarUrl} size="sm" />
-        <span className="text-dusk-100 normal-case">{session.user.name}</span>
+        <span className="hidden text-sm normal-case text-dusk-100 sm:inline">
+          {session.user.name}
+        </span>
       </Link>
       <button
         onClick={async () => {
@@ -52,7 +50,7 @@ export default function AuthNav() {
           router.push("/login");
           router.refresh();
         }}
-        className="text-dusk-300 transition-colors hover:text-dusk-100"
+        className="text-[0.68rem] uppercase tracking-[0.18em] text-dusk-300 transition-colors hover:text-dusk-100"
       >
         Çıkış
       </button>

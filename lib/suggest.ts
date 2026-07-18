@@ -43,6 +43,52 @@ function labelForDate(iso: string): string {
   return formatTrDate(new Date(iso + "T12:00:00"));
 }
 
+// ---------------------------------------------------------------------------
+// Tarih doğrulama: LLM ayıklaması (curateEvents) hedef tarihe uymayan sonuçları
+// kaçırabiliyor — burada metinde geçen somut bir tarih varsa deterministik
+// olarak da kontrol edip hedef tarihle çelişenleri eleriz. Metinde hiç tarih
+// geçmiyorsa (belirsiz/süreli etkinlik) dokunmayız.
+// ---------------------------------------------------------------------------
+const TR_MONTHS = [
+  "ocak", "şubat", "mart", "nisan", "mayıs", "haziran",
+  "temmuz", "ağustos", "eylül", "ekim", "kasım", "aralık",
+];
+
+function extractDatesMentioned(text: string): { day: number; month: number }[] {
+  const lower = text.toLocaleLowerCase("tr");
+  const found: { day: number; month: number }[] = [];
+
+  const monthRe = new RegExp(`\\b(\\d{1,2})\\s+(${TR_MONTHS.join("|")})\\b`, "g");
+  for (const m of lower.matchAll(monthRe)) {
+    const day = parseInt(m[1], 10);
+    const month = TR_MONTHS.indexOf(m[2]) + 1;
+    if (day >= 1 && day <= 31) found.push({ day, month });
+  }
+
+  const numRe = /\b(\d{1,2})[./](\d{1,2})(?:[./]\d{2,4})?\b/g;
+  for (const m of lower.matchAll(numRe)) {
+    const day = parseInt(m[1], 10);
+    const month = parseInt(m[2], 10);
+    if (day >= 1 && day <= 31 && month >= 1 && month <= 12) found.push({ day, month });
+  }
+
+  return found;
+}
+
+function matchesTargetDate(text: string, targetIso: string): boolean {
+  const dates = extractDatesMentioned(text);
+  if (dates.length === 0) return true; // belirsiz — reddetmek yerine kalsın
+  const [, tm, td] = targetIso.split("-").map(Number);
+  return dates.some((d) => d.day === td && d.month === tm);
+}
+
+function filterByTargetDate<T extends { title: string; meta: string }>(
+  items: T[],
+  targetIso: string
+): T[] {
+  return items.filter((i) => matchesTargetDate(`${i.title} ${i.meta}`, targetIso));
+}
+
 function contextPhrase(parsed: ParsedQuery, weather: WeatherInfo): string {
   const parts: string[] = [];
   if (parsed.companion) parts.push(COMPANION_TR[parsed.companion]);
@@ -107,7 +153,7 @@ export async function runSuggestionPipeline(
   dateOverride?: string // kullanıcı arayüzden tarih seçtiyse (YYYY-MM-DD)
 ): Promise<SuggestResponse> {
   // 1) LLM parsing (tarih çözümlemesi için bugünün tarihi de gider)
-  emit?.({ type: "stage", label: "metnin çözümleniyor…" });
+  emit?.({ type: "stage", label: "seni anlamaya çalışıyorum…" });
   const parsed = await parseUserText(rawText, new Date());
 
   // Arayüzden seçilen tarih, metinden çıkarılanı ezer — daha hedefli arama
@@ -171,13 +217,18 @@ export async function runSuggestionPipeline(
       ? Promise.resolve({ ticketed: stored.ticketed, free: stored.free })
       : curateEvents(rawEvents, parsed)
   ).then((ev) => {
+    // LLM ayıklaması bazen tarihi uyuşmayan sonuçları kaçırıyor — burada
+    // metinde geçen somut bir tarih varsa hedef tarihle çelişenleri deterministik
+    // olarak da eleriz (aynı gün farklı tarihli etkinliklerin karışmasını önler).
+    const ticketed = filterByTargetDate(ev.ticketed, parsed.target_date);
+    const free = filterByTargetDate(ev.free, parsed.target_date);
     const items: SuggestionItem[] = [
-      ...ev.ticketed.map((e) => ({
+      ...ticketed.map((e) => ({
         ...e,
         layer: "ticketed" as const,
         reason_text: buildReason("ticketed", e, parsed, weather),
       })),
-      ...ev.free.map((e) => ({
+      ...free.map((e) => ({
         ...e,
         layer: "free" as const,
         reason_text: buildReason("free", e, parsed, weather),

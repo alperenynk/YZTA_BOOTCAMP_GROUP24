@@ -185,6 +185,32 @@
   line-height: 2;
 }
 
+/* çıkış geçişi — kesfet'e yönlenirken landing'i yumuşakça karart */
+.landing-root .lp-exit {
+  position: fixed;
+  inset: 0;
+  z-index: 320;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--lp-ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.landing-root .lp-exit-mark {
+  font-family: var(--lp-serif);
+  font-style: italic;
+  font-weight: 420;
+  font-size: clamp(2.6rem, 7vw, 6rem);
+  color: var(--lp-bone);
+  opacity: 0;
+}
+
+.landing-root .lp-exit-mark .lp-accent {
+  color: var(--lp-ember);
+}
+
 .landing-root .lp-nav {
   position: fixed;
   top: 0;
